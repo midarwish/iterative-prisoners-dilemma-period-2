@@ -6,9 +6,9 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
-team_name = 'The name the team gives to itself' # Only 10 chars displayed.
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+team_name = 'Crackheads' # Only 10 chars displayed.
+strategy_name = 'random or something else'
+strategy_description = 'It will either be a random number that gets decided and it shows which one of the 3 things our program will output or we will create something that is persentage based and chooses the best thing in the most cases.'
     
 def move(my_history, their_history, my_score, their_score):
     ''' Arguments accepted: my_history, their_history are strings.
