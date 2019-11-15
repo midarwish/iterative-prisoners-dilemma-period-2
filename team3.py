@@ -45,6 +45,28 @@ def test_move(my_history, their_history, my_score, their_score, result):
             " and should have returned '" + result + "'")
         return False
 
+
+def diluwuw():
+    my_history = str(raw_input('My history: '))
+    their_history = str(raw_input('Their history: '))
+    z = []
+    x = []
+    z += [my_history]
+    x += [their_history]
+    his1 = len(z)-1
+    his2 = len(x)-1
+    for x in range(len(my_history.split())):
+     print 't'
+     if len(my_history)==0:
+        return 'c'
+     else:
+       if z[his2] == 'b':
+           return 'b'
+       else:
+           return 'c'
+        
+
+
 if __name__ == '__main__':
      
     # Test 1: Betray on first move.
