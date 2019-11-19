@@ -6,9 +6,17 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
+<<<<<<< Updated upstream
 team_name = 'Crackheads' # Only 10 chars displayed.
 strategy_name = 'random or something else'
 strategy_description = 'It will either be a random number that gets decided and it shows which one of the 3 things our program will output or we will create something that is persentage based and chooses the best thing in the most cases.'
+=======
+import random
+    
+team_name = 'The name the team gives to itself' # Only 10 chars displayed.
+strategy_name = 'The name the team gives to this strategy'
+strategy_description = 'How does this strategy decide?'
+>>>>>>> Stashed changes
     
 def move(my_history, their_history, my_score, their_score):
     ''' Arguments accepted: my_history, their_history are strings.
@@ -26,7 +34,11 @@ def move(my_history, their_history, my_score, their_score):
     # Analyze my_history and their_history and/or my_score and their_score.
     # Decide whether to return 'c' or 'b'.
     
-    return 'c'
+    1or2 = random.randint(1,2)
+    if 1or2 == 1:
+        return b
+    else:
+        return c
 
     
 def test_move(my_history, their_history, my_score, their_score, result):
