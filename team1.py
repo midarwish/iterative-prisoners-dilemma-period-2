@@ -6,11 +6,27 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
-team_name = 'The name the team gives to itself' # Only 10 chars displayed.
+team_name = 'Pollo tenders' # Only 10 chars displayed.
 strategy_name = 'The name the team gives to this strategy'
 strategy_description = 'How does this strategy decide?'
     
 def move(my_history, their_history, my_score, their_score):
+    # condition 1
+    if len(their_history) <= 3:
+        for letter in their_history:
+            if letter == 'c':
+                c += 1
+            elif letter == 'b':
+                b += 1
+            else:
+                print ('invalid input')
+        if c >= 2:
+            return b
+        #else:
+            # This is where the next conditions will go
+    #Other conditions go here             
+    
+    
     ''' Arguments accepted: my_history, their_history are strings.
     my_score, their_score are ints.
     
@@ -65,4 +81,6 @@ if __name__ == '__main__':
               # move('bbb', 'ccc', 0, 0) returns 'b'.
               my_score=0, 
               their_score=0,
-              result='b')             
+              result='b')
+              
+                           
