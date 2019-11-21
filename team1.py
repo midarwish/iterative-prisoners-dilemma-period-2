@@ -52,6 +52,8 @@ def move(my_history, their_history, my_score, their_score):
         elif len(their_history) <= 3:
             #it counts how many times they did each letter 
             for letter in their_history:
+                b = 0
+                c = 0
                 if letter == 'c':
                     c += 1
                 elif letter == 'b':
