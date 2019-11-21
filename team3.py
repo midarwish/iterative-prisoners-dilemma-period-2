@@ -6,11 +6,10 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
-<<<<<<< Updated upstream
 team_name = 'Okonkwo' # Only 10 chars displayed.
 strategy_name = 'look at history and decide based on it'
 strategy_description = 'find the most common used after 50 trials and choose option based on that and if it is not the needed output there will be another section which chooses the output based on previous code'
-=======   
+
 import random
 def move(my_history, their_history, my_score, their_score):  #defines the various moves
     z = ['b','b','c','b']   #sets z to be betray, betray, collude, collude

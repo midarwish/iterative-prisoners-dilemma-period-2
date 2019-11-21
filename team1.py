@@ -108,9 +108,9 @@ def move(my_history, their_history, my_score, their_score):
         # Last resort is to alternate
         else:
             if len(my_history) % 2 == 0:
-                    return c
-                else: 
-                    return b
+                return c
+            else: 
+                return b
 
         
     
