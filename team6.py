@@ -1,3 +1,4 @@
+
 ####
 # Each team's file must define four tokens:
 #     team_name: a string
@@ -6,11 +7,65 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
-team_name = 'The name the team gives to itself' # Only 10 chars displayed.
+team_name = 'C.L.A.S.S.' # Only 10 chars displayed.
 strategy_name = 'The name the team gives to this strategy'
 strategy_description = 'How does this strategy decide?'
-    
+
+
+#SAMARTH'S CODE:
 def move(my_history, their_history, my_score, their_score):
+    if len(their_history) >= 1 and their_history[-3] == 'c':
+        return 'b'  #If they have colluded for the last three turns then take advantage and betray them
+    if len(their_history) >= 1 and their_history[-1] == 'c':
+        return 'c'  #If they collude last then collude
+    elif len(their_history) >= 1 and their_history[-1] == 'b':
+        return 'b'  #If their last turn is betrayal then betray
+    else:
+        return 'c'
+#AUDREY'S CODE: 
+    if len(my_history)==0: #this will make it start off with colluding
+        return 'c'
+    elif len(my_history) >= 1 and my_history[-1]=='c' and their_history[-1]=='b':
+        return 'b'
+    elif len(my_history) >= 5 and (my_history[-5]) == 'b' and (my_history[-4]) and (my_history[-3]) and (my_history[-2]) and (my_history[-1]): #if my last 5 moves were d, collude
+        return 'c'
+    elif my_history == 25 and my_score < 100:
+        return 'b'
+    else:
+        return 'c'
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------     
+#LIPITHA'S CODE:
+    if len(my_history)==0: # It's the first round; betray.
+        return 'c'
+    else:
+        return 'b' #Else Betray
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------          
+#SAMENTHA'S CODE:
+    if len(my_history)%2 == 0:
+        return 'b'
+    else:
+        return 'c'
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------          
+#CAITLYN'S CODE:
+    def total_b(their_history):
+        total_b = 0
+        for turn in their_history:
+            if turn == 'b':
+                print 'was b'
+                total_b += 1
+        percentage = total_b/len(their_history)
+        return percentage
+        if total_b(their_history) > 0.5:
+            return 'b'
+    def betray_afterbetrayal(my_history, their_history, my_score, their_score):
+        if len(my_history) == 0:
+            return 'c'
+        elif my_history[-1] == 'c' and their_history[-1] == 'b':
+            return 'b'
+        else:
+            return 'c'
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------          
+      
     ''' Arguments accepted: my_history, their_history are strings.
     my_score, their_score are ints.
     
@@ -65,6 +120,6 @@ if __name__ == '__main__':
               # move('bbb', 'ccc', 0, 0) returns 'b'.
               my_score=0, 
               their_score=0,
-              result='b')   
+              result='b')    
               
-team_name = 'The name the team gives to itself'          
+
