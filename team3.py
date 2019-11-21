@@ -6,9 +6,17 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
+<<<<<<< Updated upstream
+team_name = 'Crackheads' # Only 10 chars displayed.
+strategy_name = 'random or something else'
+strategy_description = 'It will either be a random number that gets decided and it shows which one of the 3 things our program will output or we will create something that is persentage based and chooses the best thing in the most cases.'
+=======
+import random
+    
 team_name = 'The name the team gives to itself' # Only 10 chars displayed.
 strategy_name = 'The name the team gives to this strategy'
 strategy_description = 'How does this strategy decide?'
+>>>>>>> Stashed changes
     
 def move(my_history, their_history, my_score, their_score):
     ''' Arguments accepted: my_history, their_history are strings.
@@ -26,7 +34,11 @@ def move(my_history, their_history, my_score, their_score):
     # Analyze my_history and their_history and/or my_score and their_score.
     # Decide whether to return 'c' or 'b'.
     
-    return 'c'
+    1or2 = random.randint(1,2)
+    if 1or2 == 1:
+        return b
+    else:
+        return c
 
     
 def test_move(my_history, their_history, my_score, their_score, result):
@@ -44,6 +56,28 @@ def test_move(my_history, their_history, my_score, their_score, result):
             ") returned " + "'" + real_result + "'" +
             " and should have returned '" + result + "'")
         return False
+
+
+def diluwuw():
+    my_history = str(raw_input('My history: '))
+    their_history = str(raw_input('Their history: '))
+    z = []
+    x = []
+    z += [my_history]
+    x += [their_history]
+    his1 = len(z)-1
+    his2 = len(x)-1
+    for x in range(len(my_history.split())):
+     print 't'
+     if len(my_history)==0:
+        return 'c'
+     else:
+       if z[his2] == 'b':
+           return 'b'
+       else:
+           return 'c'
+        
+
 
 if __name__ == '__main__':
      
