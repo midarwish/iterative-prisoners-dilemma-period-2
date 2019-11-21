@@ -25,15 +25,7 @@ def move(my_history, their_history, my_score, their_score):
     
     # Analyze my_history and their_history and/or my_score and their_score.
     # Decide whether to return 'c' or 'b'.
-    if len(my_history)==0:
-        return "b"
-    elif their_history[-1]=='b' and their_history[-2] =='b':
-        return "b"
-    elif my_score >= 50:
-        return 'c'
-    elif my_score <= -250:
-        return 'b'
-
+    
     
 def test_move(my_history, their_history, my_score, their_score, result):
     '''calls move(my_history, their_history, my_score, their_score)
@@ -41,7 +33,80 @@ def test_move(my_history, their_history, my_score, their_score, result):
     Returns True or False, dpending on whether result was as expected.
     '''
     real_result = move(my_history, their_history, my_score, their_score)
-    if real_result == result:
+    if real_result == result 
+    match = len(my_history) # Counts the number of matcheds that have occured based off how many rounds are shown in the history.
+    
+    if len(my_history) == 0: # If the game has just begun, then betray.
+        return 'b'
+    while match >= 1 and match <= 23: # From matches 1 to 23...
+
+        if their_history[-1] == 'b': # If your partner betrayed last round then betray.
+            return 'b'
+        elif their_history[-1] == 'c': # If your partner colluded last round then collude.
+            return 'c'
+
+    while match >23 and match <= 27 : # From matches 24 to 27...
+
+        if their_history[-1] == 'b': # If your partner betrayed last round then collude.
+            return 'c'
+        elif their_history[-1] == 'c': # If your partner colluded last round then betray.
+            return 'b'
+
+    while match >27 and match <= 53: # From matches 28 to 53...
+        
+        if their_history[-1] == 'b' and their_history[-2] == 'b': # If your partner betrayed last round and the round before that then betray.
+            return 'b'
+        elif their_history[-1] == 'c': # If your partner colluded last round the also collude.
+            return 'c'
+        if my_score <= -250: # If your score is -250 or less...
+            
+            if their_score >= -250: # If your partner's score is greater than -250 then betray.
+                return 'b'
+            elif my_history[-1] == 'c': # If you colluded last round then collude.
+                return 'c'
+            elif my_history[-1] == 'b': # If you betrayed last round then betray again.
+                return 'b'
+                
+        elif their_score >= 100: # If their score is greater than 100, or is 100, then collude.
+            return 'c'
+        else: # Otherwise betray.
+            return 'b'
+            
+    while match >53 and match <=72: # From match 54 to match 72...
+
+        if their_history[-1] == 'b' and their_history[-2] == 'c': # If they betrayed last round and colluded before that then betray.
+            return 'b'
+        elif their_history[-1] == 'c' and their_history[-3] == 'b': # If they colluded last round and betrayed two rounds before that then betray.
+            return 'b'
+        else: # Otherwise betray.
+            return 'b'
+            
+    while match >72 and match <=91: # From match 73 to match 91...
+           
+        if their_history[-3] =='c' and my_history[-3] == 'b': # If they colluded three rounds ago and you betrayed three rounds ago then betray.
+            return 'b'
+        elif their_history[-3] == 'b' and my_history[-3] == 'c' : # If they betrayed three rounds ago and you colluded three rounds ago then collude.
+            return 'c'
+        else: # Otherwise betray.
+            return 'b'
+    
+    while match >92 and match <=95: # From match 93 to match 95...
+        
+        if my_score <= -400: # If their score is less than or equal to -400 betray.
+            return 'b' 
+        elif my_score >= 300: # If my score is greater than or equal to 300 collude.
+            return 'c'
+        else: # Otherwise betray.
+            return 'b'
+            
+    if my_score <= -600 and their_score >= -100: # If your score is less than or equal to -600 and their score is greater than or equal to -100 then betray.
+        return 'b'
+    elif their_score <= -600 and my_score >= 0 : # If their score is less than or equal to -600 and my score is greater than or equal to 0 then betray.
+        return 'c' 
+    else: # Otherwise betray.
+        return 'b'
+        
+:
         return True
     else:
         print("move(" +
