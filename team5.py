@@ -25,7 +25,9 @@ def move(my_history, their_history, my_score, their_score):
     
     # Analyze my_history and their_history and/or my_score and their_score.
     # Decide whether to return 'c' or 'b'.
-     match = len(my_history) # Counts the number of matcheds that have occured based off how many rounds are shown in the history.
+    
+    
+    match = len(my_history) # Counts the number of matcheds that have occured based off how many rounds are shown in the history.
     
     if len(my_history) == 0: # If the game has just begun, then betray.
         return 'b'
@@ -36,14 +38,14 @@ def move(my_history, their_history, my_score, their_score):
         elif their_history[-1] == 'c': # If your partner colluded last round then collude.
             return 'c'
 
-    while match >23 and match <= 27 : # From matches 24 to 27...
+    while match > 23 and match <= 27: # From matches 24 to 27...
 
         if their_history[-1] == 'b': # If your partner betrayed last round then collude.
             return 'c'
         elif their_history[-1] == 'c': # If your partner colluded last round then betray.
             return 'b'
 
-    while match >27 and match <= 53: # From matches 28 to 53...
+    while match > 27 and match <= 53: # From matches 28 to 53...
         
         if their_history[-1] == 'b' and their_history[-2] == 'b': # If your partner betrayed last round and the round before that then betray.
             return 'b'
@@ -63,7 +65,7 @@ def move(my_history, their_history, my_score, their_score):
         else: # Otherwise betray.
             return 'b'
             
-    while match >53 and match <=72: # From match 54 to match 72...
+    while match > 53 and match <= 72: # From match 54 to match 72...
 
         if their_history[-1] == 'b' and their_history[-2] == 'c': # If they betrayed last round and colluded before that then betray.
             return 'b'
@@ -72,16 +74,16 @@ def move(my_history, their_history, my_score, their_score):
         else: # Otherwise betray.
             return 'b'
             
-    while match >72 and match <=91: # From match 73 to match 91...
+    while match > 72 and match <= 91: # From match 73 to match 91...
            
-        if their_history[-3] =='c' and my_history[-3] == 'b': # If they colluded three rounds ago and you betrayed three rounds ago then betray.
+        if their_history[-3] == 'c' and my_history[-3] == 'b': # If they colluded three rounds ago and you betrayed three rounds ago then betray.
             return 'b'
-        elif their_history[-3] == 'b' and my_history[-3] == 'c' : # If they betrayed three rounds ago and you colluded three rounds ago then collude.
+        elif their_history[-3] == 'b' and my_history[-3] == 'c': # If they betrayed three rounds ago and you colluded three rounds ago then collude.
             return 'c'
         else: # Otherwise betray.
             return 'b'
     
-    while match >92 and match <=95: # From match 93 to match 95...
+    while match > 92 and match <= 95: # From match 93 to match 95...
         
         if my_score <= -400: # If their score is less than or equal to -400 betray.
             return 'b' 
