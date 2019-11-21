@@ -42,8 +42,7 @@ betray = example1
 collude = example0
 
 modules = [example0, example1, example2, example3, example4, example5, example6, example7,
-team0, team1, team2, team3, team4, team5, team6, team7, team8, team9, team10, 
-team11, team12, team13, team14]
+team1, team3, team4, team5, team6, team7, team8]
 for module in modules:
     reload(module)
     print ('reloaded',module)
