@@ -11,19 +11,31 @@ team_name = 'Team 4' # Only 10 chars displayed.
 strategy_name = 'Team 4 Strategy'
 strategy_description = 'Random for 5 rounds, if other team colludes 5 times, collude for rest of time. If other team betrays 2 times, betray for rest of time.'
     
+    
 def move(my_history, their_history, my_score, their_score):
-    if len(my_history) == 0 and their_score >= my_score:
+    if len(my_history)%2 == 0:
         return 'c'
     else:
+        return
+# collude then alternate
+    if their_score >= my_score:
         return 'b'
-# If their score is higher or equal to our score, collude
-# Otherwise, betray
+    else:
+        return 'c'
+# If their score is higher or equal to our score, betray
+# Otherwise, collude
     if my_history[-1] == 'c' and their_history[-1] == 'c':
         return 'c'
     else:
         return 'b'
 # If they colluded last time and we colluded last time, then collude
 # If either one of us betrayed, continue betraying
+    if their_history[-1] == 'b':
+        return 'b'
+    elif my_history[-1] == 'b':
+        return 'b'
+# If they betrayed, we will betray them continuously
+    
 
     ''' Arguments accepted: my_history, their_history are strings.
     my_score, their_score are ints.
