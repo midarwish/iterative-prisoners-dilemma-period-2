@@ -7,9 +7,9 @@
 ####
 
 team_name = 'We luv Mostafa' # Only 10 chars displayed.
-#Add all team member's names here
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+#Vinh, Mostafa, Mitchell, Richard
+strategy_name = 'What are we doing'
+strategy_description = 'We are alternating and whatnot'
     
 def move(my_history, their_history, my_score, their_score):
     ''' Arguments accepted: my_history, their_history are strings.
@@ -18,6 +18,55 @@ def move(my_history, their_history, my_score, their_score):
     Make my move.
     Returns 'c' or 'b'. 
     '''
+    #Scenario 1: when I am betrayed 3 times in a row return a collude, else continue betraying
+    
+    if len(their_history) >= 3 and their_history[-3] == 'b': #when they have more than 3 choices and B is chosen 3 times in a row
+        len(their_history) <= int(3)
+        return 'c' #return a collude
+    else:
+        return 'b' #if not, return a betray
+        
+    #Scenario 2: 
+    if my_score < 0: #if my score goes under 0
+        return 'b'  #then betray
+    else:   #if it isn't under 0
+        return 'c' # then collude
+        
+    #Scenario 3:
+    if len(my_history)==0:# when we start the game, collude first
+       return 'c'
+    else: # after the start, betray all the time
+       return 'b'
+       
+    #Scenario 4:
+    if len(my_history) == 0:
+        return 'c'
+        #this makes us return will collude on our very first turn
+    else:
+        recent_round_them = their_history[-1]
+        recent_round_me = my_history[-1]
+        for round in range(len(my_history)-1):
+            prior_round_them = their_history[round]
+            prior_round_me = my_history[round]
+            if (prior_round_me == recent_round_me) and (prior_round_them == recent_round_them):
+                return their_history[round]
+        #this references both team's previous turns
+        if their_history[-1] == 'b':
+            return 'b'
+            #returns betray if the other team's last turn was betray
+        else:
+            return 'c'
+            #returns collude if the team's last turn wasn't betray
+            
+    #Scenario 5:
+    
+    if len(my_history) == 0: # when the game starts, betray
+        return 'b'
+    elif 'bbbbb' in my_history:    # if whenever we betrayed 5 times in a row, collude
+        return 'c'
+    else:                                     # otherwise, betray
+        return 'b'
+
 
     # my_history: a string with one letter (c or b) per round that has been played with this opponent.
     # their_history: a string of the same length as history, possibly empty. 
