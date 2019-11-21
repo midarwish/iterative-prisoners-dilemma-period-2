@@ -25,16 +25,7 @@ def move(my_history, their_history, my_score, their_score):
     
     # Analyze my_history and their_history and/or my_score and their_score.
     # Decide whether to return 'c' or 'b'.
-    
-    
-def test_move(my_history, their_history, my_score, their_score, result):
-    '''calls move(my_history, their_history, my_score, their_score)
-    from this module. Prints error if return value != result.
-    Returns True or False, dpending on whether result was as expected.
-    '''
-    real_result = move(my_history, their_history, my_score, their_score)
-    if real_result == result 
-    match = len(my_history) # Counts the number of matcheds that have occured based off how many rounds are shown in the history.
+     match = len(my_history) # Counts the number of matcheds that have occured based off how many rounds are shown in the history.
     
     if len(my_history) == 0: # If the game has just begun, then betray.
         return 'b'
@@ -105,8 +96,15 @@ def test_move(my_history, their_history, my_score, their_score, result):
         return 'c' 
     else: # Otherwise betray.
         return 'b'
-        
-:
+    
+    
+def test_move(my_history, their_history, my_score, their_score, result):
+    '''calls move(my_history, their_history, my_score, their_score)
+    from this module. Prints error if return value != result.
+    Returns True or False, dpending on whether result was as expected.
+    '''
+    real_result = move(my_history, their_history, my_score, their_score)
+    if real_result == result:
         return True
     else:
         print("move(" +
