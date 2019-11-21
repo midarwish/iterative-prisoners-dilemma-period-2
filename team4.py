@@ -36,7 +36,7 @@ def move(my_history, their_history, my_score, their_score):
         return 'b'
 # If they betrayed, we will betray them continuously
     
-
+    
     ''' Arguments accepted: my_history, their_history are strings.
     my_score, their_score are ints.
     
