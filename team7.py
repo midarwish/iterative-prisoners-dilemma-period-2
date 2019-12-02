@@ -28,7 +28,7 @@ def move(my_history, their_history, my_score, their_score):
     elif len(their_history) >= 1 and their_history [-1] == 'b': #if their first move was betray, collude
         return 'c'
     #scenario 4 - 
-    elif len(my_score) <= their_score:
+    elif my_score <= their_score:
         return 'b'
     else:
         return 'c'

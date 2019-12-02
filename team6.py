@@ -14,7 +14,7 @@ strategy_description = 'How does this strategy decide?'
 
 #SAMARTH'S CODE:
 def move(my_history, their_history, my_score, their_score):
-    if len(their_history) >= 1 and their_history[-3] == 'c':
+    if len(their_history) >= 3 and their_history[-3] == 'c':
         return 'b'  #If they have colluded for the last three turns then take advantage and betray them
     if len(their_history) >= 1 and their_history[-1] == 'c':
         return 'c'  #If they collude last then collude

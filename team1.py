@@ -15,7 +15,7 @@ future_list = []
 def move(my_history, their_history, my_score, their_score):
     # this is the first thing it will test, 
     # it will check if we wanted to do a certain series of moves and then it will execute them in order
-    if len(future_list) >= 0:
+    if len(future_list) > 0:
         #makes the current move what we wanted from previos analysis
         current_move = future_list[0]
         # deletes it from the list so that we can use the next planned move in the list
