@@ -43,7 +43,7 @@ collude = example0
 
 #modules = [team1, team3, team4, team5, team6, team7, team8]
 
-modules = [team1, team3, team4, team5, team6, team7, team8]
+modules = [team3, team4, team5, team6, team7, team8]
 for module in modules:
     reload(module)
     print ('reloaded',module)

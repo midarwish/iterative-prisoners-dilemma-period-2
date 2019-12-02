@@ -15,8 +15,6 @@ strategy_description = 'Random for 5 rounds, if other team colludes 5 times, col
 def move(my_history, their_history, my_score, their_score):
     if len(my_history)%2 == 0:
         return 'c'
-    else:
-        return
 # collude then alternate
     if their_score >= my_score:
         return 'b'
