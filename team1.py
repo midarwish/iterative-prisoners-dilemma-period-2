@@ -17,7 +17,7 @@ def move(my_history, their_history, my_score, their_score):
     
 
     # This first condition will go once there are more than 6 moves in the history so that it has enough moves to analize
-    if len(my_history) >=4 and their_history >= 6:
+    if len(my_history) >=6 and their_history >= 6:
             # This checks if their last 4 moves are cbcb we return the same
         if their_history[-4] == 'c' and their_history[-3] == 'b' and their_history[-2] == 'c' and their_history[-1] == 'b':
             return 'c'
@@ -46,12 +46,13 @@ def move(my_history, their_history, my_score, their_score):
                 b += 1
             else:
                 print ('invalid input')
-        #then it checks if the majority is c and b if it is true
-        if c >= 2:
-            return 'b'
+            #then it checks if the majority is c and b if it is true
+            if c >= 2:
+                return 'b'
         #otherwise, it will alternate
         else:
             if len(my_history) % 2 == 0:
+                return 'c'
 
         
     

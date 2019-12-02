@@ -1,45 +1,166 @@
 --------------------------------------------------------------------------------
 Section 0 - Line up
 --------------------------------------------------------------------------------
-Player 0 (P0): Okonkwo, look at history and decide based on it
+Player 0 (P0): Pollo tenders, The name the team gives to this strategy
+        How does this strategy decide?
+Player 1 (P1): Okonkwo, look at history and decide based on it
         find the most common used after 50 trials and choose option based on tha
         t and if it is not the needed output there will be another section which
          chooses the output based on previous code
-Player 1 (P1): Team 4, Team 4 Strategy
+Player 2 (P2): Team 4, Team 4 Strategy
         Random for 5 rounds, if other team colludes 5 times, collude for rest of
          time. If other team betrays 2 times, betray for rest of time.
-Player 2 (P2):  Team 5 Mr.Turner, The name the team gives to this strategy
+Player 3 (P3):  Team 5 Mr.Turner, The name the team gives to this strategy
         How does this strategy decide?
-Player 3 (P3): C.L.A.S.S., The name the team gives to this strategy
+Player 4 (P4): C.L.A.S.S., The name the team gives to this strategy
         How does this strategy decide?
-Player 4 (P4): Team7, The nice guys
+Player 5 (P5): Team7, The nice guys
         We will always collude
-Player 5 (P5): We luv Mostafa, What are we doing
+Player 6 (P6): We luv Mostafa, What are we doing
         We are alternating and whatnot
 --------------------------------------------------------------------------------
 Section 1 - Player vs. Player
 --------------------------------------------------------------------------------
 Each column shows pts/round earned against each other player:
-             P0     P1     P2     P3     P4     P5
-vs. P0 :      0      0     21   -148   -115    -89
-vs. P1 :     -3      0    -87    -76   -125   -124
-vs. P2 :   -156   -295      0   -246   -344   -364
-vs. P3 :   -278   -371   -246      0   -163   -247
-vs. P4 :   -215   -125    -25   -163      0    100
-vs. P5 :   -238   -133     -3    -58   -500      0
-TOTAL  :   -890   -924   -340   -691  -1247   -724
+             P0     P1     P2     P3     P4     P5     P6
+vs. P0 :      0      0      0     24     97     99    100
+vs. P1 :      0      0    -22     21   -111    -92    -98
+vs. P2 :     -3    -27      0    -87    -77   -125   -123
+vs. P3 :   -123   -134   -292      0   -247   -370   -337
+vs. P4 :   -489   -273   -370   -247      0   -161   -249
+vs. P5 :   -497   -234   -125     -4   -164      0    100
+vs. P6 :   -500   -234   -133    -25    -56   -500      0
+TOTAL  :  -1612   -902   -942   -318   -558  -1149   -607
 --------------------------------------------------------------------------------
 Section 2 - Leaderboard
 --------------------------------------------------------------------------------
 Average points per round:
 Team name (P#):  Score      with strategy name
- Team 5 Mr(P2):        -57 points with The name the team gives to this strategy
-C.L.A.S.S.(P3):       -116 points with The name the team gives to this strategy
-We luv Mos(P5):       -121 points with What are we doing                       
-Okonkwo   (P0):       -149 points with look at history and decide based on it  
-Team 4    (P1):       -154 points with Team 4 Strategy                         
-Team7     (P4):       -208 points with The nice guys                           
+ Team 5 Mr(P3):        -46 points with The name the team gives to this strategy
+C.L.A.S.S.(P4):        -80 points with The name the team gives to this strategy
+We luv Mos(P6):        -87 points with What are we doing                       
+Okonkwo   (P1):       -129 points with look at history and decide based on it  
+Team 4    (P2):       -135 points with Team 4 Strategy                         
+Team7     (P5):       -165 points with The nice guys                           
+Pollo tend(P0):       -231 points with The name the team gives to this strategy
 --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+team1--------------------------------------------------------------------------------
+####
+# Each team's file must define four tokens:
+#     team_name: a string
+#     strategy_name: a string
+#     strategy_description: a string
+#     move: A function that returns 'c' or 'b'
+####
+
+team_name = 'Pollo tenders' # Only 10 chars displayed.
+strategy_name = 'The name the team gives to this strategy'
+strategy_description = 'How does this strategy decide?'
+
+    
+def move(my_history, their_history, my_score, their_score):
+    # this is the first thing it will test, 
+    # it will check if we wanted to do a certain series of moves and then it will execute them in order
+    
+
+    # This first condition will go once there are more than 6 moves in the history so that it has enough moves to analize
+    if len(my_history) >=6 and their_history >= 6:
+            # This checks if their last 4 moves are cbcb we return the same
+        if their_history[-4] == 'c' and their_history[-3] == 'b' and their_history[-2] == 'c' and their_history[-1] == 'b':
+            return 'c'
+        # If they are doing bb in between each c we make sure to c on their c
+        elif their_history[-4] == 'c' and their_history[-3] == 'b' and their_history[-2] == 'b' and their_history[-1] == 'c':
+            return 'b'
+        # Same as first just opposite
+        elif their_history[-4] == 'b' and their_history[-3] == 'c' and their_history[-2] == 'b' and their_history[-1] == 'c':
+            return 'b'
+        # If they alternate every two rounds we do the same.
+        elif their_history[-6] == 'b' and their_history[-5] == 'b' and their_history[-4] == 'c' and their_history[-3] == 'c' and their_history[-2] == 'b' and their_history[-1] == 'b':
+            return 'c'
+        # If they follow this pattern we know to betray when they collude to get points.
+        elif their_history[-6] == 'b' and their_history[-5] == 'b' and their_history[-4] == 'c' and their_history[-3] == 'b' and their_history[-2] == 'b' and their_history[-1] == 'c':
+            return 'b'
+
+    # condition executes within the first three moves of the game
+    elif len(their_history) <= 3:
+        #it counts how many times they did each letter 
+        for letter in their_history:
+            b = 0
+            c = 0
+            if letter == 'c':
+                c += 1
+            elif letter == 'b':
+                b += 1
+            else:
+                print ('invalid input')
+            #then it checks if the majority is c and b if it is true
+            if c >= 2:
+                return 'b'
+        #otherwise, it will alternate
+        else:
+            if len(my_history) % 2 == 0:
+                return 'c'
+
+        
+    
+    ''' Arguments accepted: my_history, their_history are strings.
+    my_score, their_score are ints.
+    
+    Make my move.
+    Returns 'c' or 'b'. 
+    '''
+
+    # my_history: a string with one letter (c or b) per round that has been played with this opponent.
+    # their_history: a string of the same length as history, possibly empty. 
+    # The first round between these two players is my_history[0] and their_history[0].
+    # The most recent round is my_history[-1] and their_history[-1].
+    
+    # Analyze my_history and their_history and/or my_score and their_score.
+    # Decide whether to return 'c' or 'b'.
+    
+    return 'c'
+
+    
+def test_move(my_history, their_history, my_score, their_score, result):
+    '''calls move(my_history, their_history, my_score, their_score)
+    from this module. Prints error if return value != result.
+    Returns True or False, dpending on whether result was as expected.
+    '''
+    real_result = move(my_history, their_history, my_score, their_score)
+    if real_result == result:
+        return True
+    else:
+        print("move(" +
+            ", ".join(["'"+my_history+"'", "'"+their_history+"'",
+                       str(my_score), str(their_score)])+
+            ") returned " + "'" + real_result + "'" +
+            " and should have returned '" + result + "'")
+        return False
+
+if __name__ == '__main__':
+     
+    # Test 1: Betray on first move.
+    if test_move(my_history='',
+              their_history='', 
+              my_score=0,
+              their_score=0,
+              result='b'):
+         print 'Test passed'
+     # Test 2: Continue betraying if they collude despite being betrayed.
+    test_move(my_history='bbb',
+              their_history='ccc', 
+              # Note the scores are for testing move().
+              # The history and scores don't need to match unless
+              # that is relevant to the test of move(). Here,
+              # the simulation (if working correctly) would have awarded 
+              # 300 to me and -750 to them. This test will pass if and only if
+              # move('bbb', 'ccc', 0, 0) returns 'b'.
+              my_score=0, 
+              their_score=0,
+              result='b')
+              
+                           
 --------------------------------------------------------------------------------
 team3--------------------------------------------------------------------------------
 ####
@@ -646,332 +767,455 @@ if __name__ == '__main__':
               their_score=0,
               result='b')             
 --------------------------------------------------------------------------------
-Section 3 - Game Data for Team Okonkwo
+Section 3 - Game Data for Team Pollo tenders
 --------------------------------------------------------------------------------
--3 pt/round: Okonkwo(P0) "look at history and decide based on it"
-0 pt/round: Team 4(P1) "Team 4 Strategy"
+0 pt/round: Pollo tenders(P0) "The name the team gives to this strategy"
+0 pt/round: Okonkwo(P1) "look at history and decide based on it"
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+CCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCC
+
+--------------------------------------------------------------------------------
+-3 pt/round: Pollo tenders(P0) "The name the team gives to this strategy"
+0 pt/round: Team 4(P2) "Team 4 Strategy"
 CcCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 CBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 
-CCCCCCCCCCCCCCCCCCCCCCC
-CCCCCCCCCCCCCCCCCCCCCCC
+CCCCCCC
+CCCCCCC
 
 --------------------------------------------------------------------------------
--156 pt/round: Okonkwo(P0) "look at history and decide based on it"
-21 pt/round:  Team 5 Mr.Turner(P2) "The name the team gives to this strategy"
-cBcCCCCCCCCCCCCCCCCCCCCCcbBCCCCCCCCCCCCCCCCCCCCCCCCCCCcccccccccccccccccccccccccc
-BcBCCCCCCCCCCCCCCCCCCCCCBbcCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBB
+-123 pt/round: Pollo tenders(P0) "The name the team gives to this strategy"
+24 pt/round:  Team 5 Mr.Turner(P3) "The name the team gives to this strategy"
+cCCCCCCCCCCCCCCCCCCCCCCCccccCCCCCCCCCCCCCCCCCCCCCCCCCCcccccccccccccccccccccccccc
+BCCCCCCCCCCCCCCCCCCCCCCCBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBB
 
-ccccccccccccCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-BBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+ccccccccccccCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+BBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 
---------------------------------------------------------------------------------
--278 pt/round: Okonkwo(P0) "look at history and decide based on it"
--148 pt/round: C.L.A.S.S.(P3) "The name the team gives to this strategy"
-CCCcbbcBcbbbbbbcBcbcbbbbcCCcbbcBcbbcBcbbcBcbbcCCcbcbbbbbbbbbbbbbbbbbbbbcCCccbbbc
-CCCBbbBcBbbbbbbBcBbBbbbbBCCBbbBcBbbBcBbbBcBbbBCCBbBbbbbbbbbbbbbbbbbbbbbBCCBBbbbB
-
-BcbcbcbcbcbbbbbcBcbbbbbcBcbbbbbcBcbccBcbbcBccCccbcbccBcbbbbbbbcCCcbbbcBcbbbbcBcb
-cBbBbBbBbBbbbbbBcBbbbbbBcBbbbbbBcBbBBcBbbBcBBCBBbBbBBcBbbbbbbbBCCBbbbBcBbbbbBcBb
-
-bbbbbbbcBc
-bbbbbbbBcB
+CCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCC
 
 --------------------------------------------------------------------------------
--215 pt/round: Okonkwo(P0) "look at history and decide based on it"
--115 pt/round: Team7(P4) "The nice guys"
-CcbBCccbBCcbBCcbCcbBCcbCcbCcbBCcbBCcbBCccbCcbCccbBCcbBCcbBCcbBCcbCccbBCcbBCccbBC
-CBbcCBBbcCBbcCBbCBbcCBbCBbCBbcCBbcCBbcCBBbCBbCBBbcCBbcCBbcCBbcCBbCBBbcCBbcCBBbcC
+-489 pt/round: Pollo tenders(P0) "The name the team gives to this strategy"
+97 pt/round: C.L.A.S.S.(P4) "The name the team gives to this strategy"
+CCCccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+CCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
-cccccbBCcbBCcbBCccbBCccbBCccbBCcbBCcbCccbBCcbBCcccccbBCcbBCccbBCcbBCcbBCcccbBCcc
-BBBBBbcCBbcCBbcCBBbcCBBbcCBBbcCBbcCBbCBBbcCBbcCBBBBBbcCBbcCBBbcCBbcCBbcCBBBbcCBB
-
-bBCcbBC
-bcCBbcC
+ccccccccccccccccccccccccccccccccccccccccccccccccccccc
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
 --------------------------------------------------------------------------------
--238 pt/round: Okonkwo(P0) "look at history and decide based on it"
--89 pt/round: We luv Mostafa(P5) "What are we doing"
-ccbcbBcCCcbbcCCcbbbBCCCcccbbbCCCcbbcCCcbcbBcBCcCcbbcCCccbcbCcBccCcbbbBCCCcccbbcB
-BBbBbcBCCBbbBCCBbbbcCCCBBBbbbCCCBbbBCCBbBbcBcCBCBbbBCCBBbBbCBcBBCBbbbcCCCBBBbbBc
+-497 pt/round: Pollo tenders(P0) "The name the team gives to this strategy"
+99 pt/round: Team7(P5) "The nice guys"
+Cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+CBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
-CcBcbBcCCccbbcBCcBcbCcBcbBcBCcCcb
-CBcBbcBCCBBbbBcCBcBbCBcBbcBcCBCBb
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+
+--------------------------------------------------------------------------------
+-500 pt/round: Pollo tenders(P0) "The name the team gives to this strategy"
+100 pt/round: We luv Mostafa(P6) "What are we doing"
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+
+cccccccccccccccccc
+BBBBBBBBBBBBBBBBBB
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Section 3 - Game Data for Team Okonkwo
+--------------------------------------------------------------------------------
+0 pt/round: Okonkwo(P1) "look at history and decide based on it"
+0 pt/round: Pollo tenders(P0) "The name the team gives to this strategy"
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+CCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCC
+
+--------------------------------------------------------------------------------
+-27 pt/round: Okonkwo(P1) "look at history and decide based on it"
+-22 pt/round: Team 4(P2) "Team 4 Strategy"
+CcBcBcBcBcBcBcBcCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+CBcBcBcBcBcBcBcBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+--------------------------------------------------------------------------------
+-134 pt/round: Okonkwo(P1) "look at history and decide based on it"
+21 pt/round:  Team 5 Mr.Turner(P3) "The name the team gives to this strategy"
+cCCCCCCCCCCCCCCCCCCCCCCCcbBCCCCCCCCCCCCCCCCCCCCCCCCCCCcccccccccccccccccccccccccc
+BCCCCCCCCCCCCCCCCCCCCCCCBbcCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBB
+
+ccccccccccccCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+BBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+--------------------------------------------------------------------------------
+-273 pt/round: Okonkwo(P1) "look at history and decide based on it"
+-111 pt/round: C.L.A.S.S.(P4) "The name the team gives to this strategy"
+CCCcbcbbbbbbcCCcbbbbbbcCCcbcbbcBcbbcBccBcbccBcbcbcbbcCCcbbbbcCCcbbbbbbcCCcccbbbb
+CCCBbBbbbbbbBCCBbbbbbbBCCBbBbbBcBbbBcBBcBbBBcBbBbBbbBCCBbbbbBCCBbbbbbbBCCBBBbbbb
+
+bcBcbbbcCCcbbbcCCcbcbbbbcBccBcb
+bBcBbbbBCCBbbbBCCBbBbbbbBcBBcBb
+
+--------------------------------------------------------------------------------
+-234 pt/round: Okonkwo(P1) "look at history and decide based on it"
+-92 pt/round: Team7(P5) "The nice guys"
+CcbBCcbBCcbCcbBCcbCcbBCcbBCcbCcccbCccbBCcbBCccbBCccbBCcbBCccbBCcbBCcbCcbCccbBCcb
+CBbcCBbcCBbCBbcCBbCBbcCBbcCBbCBBBbCBBbcCBbcCBBbcCBBbcCBbcCBBbcCBbcCBbCBbCBBbcCBb
+
+BCccbCccbBCccbCcbBCcccccbCccbCccbBCcbBCcbCcbBCcbCcbBCcbCcbBCccbCcbCccbCcbBCcccbC
+cCBBbCBBbcCBBbCBbcCBBBBBbCBBbCBBbcCBbcCBbCBbcCBbCBbcCBbCBbcCBBbCBbCBBbCBbcCBBBbC
+
+ccbCcbBCc
+BBbCBbcCB
+
+--------------------------------------------------------------------------------
+-234 pt/round: Okonkwo(P1) "look at history and decide based on it"
+-98 pt/round: We luv Mostafa(P6) "What are we doing"
+cbbcCCcbccCcccbbbBCCCcbccBcbBcBCcBcbBcBCcBccBcbBcCCcbbbBCCCcbcbCcCcbbbBCCCccbccB
+BbbBCCBbBBCBBBbbbcCCCBbBBcBbcBcCBcBbcBcCBcBBcBbcBCCBbbbcCCCBbBbCBCBbbbcCCCBBbBBc
+
+cbCcCcbbcCCcbbcBCcBcbBcBCcCccbbbCCCccbb
+BbCBCBbbBCCBbbBcCBcBbcBcCBCBBbbbCCCBBbb
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 Section 3 - Game Data for Team Team 4
 --------------------------------------------------------------------------------
-0 pt/round: Team 4(P1) "Team 4 Strategy"
--3 pt/round: Okonkwo(P0) "look at history and decide based on it"
+0 pt/round: Team 4(P2) "Team 4 Strategy"
+-3 pt/round: Pollo tenders(P0) "The name the team gives to this strategy"
 CBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 CcCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 
-CCCCCCCCCCCCCCCCCCCCCCC
-CCCCCCCCCCCCCCCCCCCCCCC
+CCCCCCC
+CCCCCCC
 
 --------------------------------------------------------------------------------
--295 pt/round: Team 4(P1) "Team 4 Strategy"
--87 pt/round:  Team 5 Mr.Turner(P2) "The name the team gives to this strategy"
+-22 pt/round: Team 4(P2) "Team 4 Strategy"
+-27 pt/round: Okonkwo(P1) "look at history and decide based on it"
+CBcBcBcBcBcBcBcBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+CcBcBcBcBcBcBcBcCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+--------------------------------------------------------------------------------
+-292 pt/round: Team 4(P2) "Team 4 Strategy"
+-87 pt/round:  Team 5 Mr.Turner(P3) "The name the team gives to this strategy"
 cBcBcBcBcBcBcBcBcBcBcBcBCbCbcBCBCCCCCCCCCCCCCCCCCCCCCCcbcbcbcbcbcbcbcbcbcbcbcbcb
 BcBcBcBcBcBcBcBcBcBcBcBcCbCbBcCcCCCCCCCCCCCCCCCCCCCCCCBbBbBbBbBbBbBbBbBbBbBbBbBb
 
 cbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcb
 BbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBb
 
-cbcbcbcbcbcbcbcbcbcbcb
-BbBbBbBbBbBbBbBbBbBbBb
+cbcbcbcbcbcbc
+BbBbBbBbBbBbB
 
 --------------------------------------------------------------------------------
--371 pt/round: Team 4(P1) "Team 4 Strategy"
--76 pt/round: C.L.A.S.S.(P3) "The name the team gives to this strategy"
+-370 pt/round: Team 4(P2) "Team 4 Strategy"
+-77 pt/round: C.L.A.S.S.(P4) "The name the team gives to this strategy"
 CBcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcb
 CcBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBb
 
-cbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcb
-BbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBb
-
-cbcbcbcbcbcbcbcbcbc
-BbBbBbBbBbBbBbBbBbB
+cbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc
+BbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbB
 
 --------------------------------------------------------------------------------
--125 pt/round: Team 4(P1) "Team 4 Strategy"
--125 pt/round: Team7(P4) "The nice guys"
+-125 pt/round: Team 4(P2) "Team 4 Strategy"
+-125 pt/round: Team7(P5) "The nice guys"
 CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
 CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
 
-CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
-CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
+CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbC
+CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbC
 
 --------------------------------------------------------------------------------
--133 pt/round: Team 4(P1) "Team 4 Strategy"
--124 pt/round: We luv Mostafa(P5) "What are we doing"
+-133 pt/round: Team 4(P2) "Team 4 Strategy"
+-123 pt/round: We luv Mostafa(P6) "What are we doing"
 cbcbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
 BbBbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
 
-CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
-CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
+CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbC
+CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbC
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 Section 3 - Game Data for Team  Team 5 Mr.Turner
 --------------------------------------------------------------------------------
-21 pt/round:  Team 5 Mr.Turner(P2) "The name the team gives to this strategy"
--156 pt/round: Okonkwo(P0) "look at history and decide based on it"
-BcBCCCCCCCCCCCCCCCCCCCCCBbcCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBB
-cBcCCCCCCCCCCCCCCCCCCCCCcbBCCCCCCCCCCCCCCCCCCCCCCCCCCCcccccccccccccccccccccccccc
+24 pt/round:  Team 5 Mr.Turner(P3) "The name the team gives to this strategy"
+-123 pt/round: Pollo tenders(P0) "The name the team gives to this strategy"
+BCCCCCCCCCCCCCCCCCCCCCCCBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBB
+cCCCCCCCCCCCCCCCCCCCCCCCccccCCCCCCCCCCCCCCCCCCCCCCCCCCcccccccccccccccccccccccccc
 
-BBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-ccccccccccccCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+BBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+ccccccccccccCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+CCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCC
 
 --------------------------------------------------------------------------------
--87 pt/round:  Team 5 Mr.Turner(P2) "The name the team gives to this strategy"
--295 pt/round: Team 4(P1) "Team 4 Strategy"
+21 pt/round:  Team 5 Mr.Turner(P3) "The name the team gives to this strategy"
+-134 pt/round: Okonkwo(P1) "look at history and decide based on it"
+BCCCCCCCCCCCCCCCCCCCCCCCBbcCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBB
+cCCCCCCCCCCCCCCCCCCCCCCCcbBCCCCCCCCCCCCCCCCCCCCCCCCCCCcccccccccccccccccccccccccc
+
+BBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+ccccccccccccCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+--------------------------------------------------------------------------------
+-87 pt/round:  Team 5 Mr.Turner(P3) "The name the team gives to this strategy"
+-292 pt/round: Team 4(P2) "Team 4 Strategy"
 BcBcBcBcBcBcBcBcBcBcBcBcCbCbBcCcCCCCCCCCCCCCCCCCCCCCCCBbBbBbBbBbBbBbBbBbBbBbBbBb
 cBcBcBcBcBcBcBcBcBcBcBcBCbCbcBCBCCCCCCCCCCCCCCCCCCCCCCcbcbcbcbcbcbcbcbcbcbcbcbcb
 
 BbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBb
 cbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcb
 
-BbBbBbBbBbBbBbBbBbBbBb
-cbcbcbcbcbcbcbcbcbcbcb
+BbBbBbBbBbBbB
+cbcbcbcbcbcbc
 
 --------------------------------------------------------------------------------
--246 pt/round:  Team 5 Mr.Turner(P2) "The name the team gives to this strategy"
--246 pt/round: C.L.A.S.S.(P3) "The name the team gives to this strategy"
+-247 pt/round:  Team 5 Mr.Turner(P3) "The name the team gives to this strategy"
+-247 pt/round: C.L.A.S.S.(P4) "The name the team gives to this strategy"
 BcBcbbbbbbbbbbbbbbbbbbbbcCBbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 cBcBbbbbbbbbbbbbbbbbbbbbBCcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 
 --------------------------------------------------------------------------------
--25 pt/round:  Team 5 Mr.Turner(P2) "The name the team gives to this strategy"
--344 pt/round: Team7(P4) "The nice guys"
+-4 pt/round:  Team 5 Mr.Turner(P3) "The name the team gives to this strategy"
+-370 pt/round: Team7(P5) "The nice guys"
 BCcbBCcbBCcbBCcbBCcbBCcbCbCbBCccbBCccbBCccbBCccbBCccbBBBBBBBBBBBBBBBBBBBBBBBBBBB
 cCBbcCBbcCBbcCBbcCBbcCBbCbCbcCBBbcCBBbcCBBbcCBBbcCBBbccccccccccccccccccccccccccc
 
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-cccccccccccccccccccccccccccccccccccccccccccc
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCcbBB
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccCBbcc
+
+BBBBBCcbBBBBBBBBCcbB
+cccccCBbccccccccCBbc
 
 --------------------------------------------------------------------------------
--3 pt/round:  Team 5 Mr.Turner(P2) "The name the team gives to this strategy"
--364 pt/round: We luv Mostafa(P5) "What are we doing"
+-25 pt/round:  Team 5 Mr.Turner(P3) "The name the team gives to this strategy"
+-337 pt/round: We luv Mostafa(P6) "What are we doing"
 bbbBCCCcbbbBCCCcbbbBCCCcccccbbbBCCCccbbbBCCCccbbbBCCCcbbbBBBBBBBBBBBBBBBBBBBBBBB
 bbbcCCCBbbbcCCCBbbbcCCCBBBBBbbbcCCCBBbbbcCCCBBbbbcCCCBbbbccccccccccccccccccccccc
 
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
-BBBBCCCcbbbBBBBBBB
-ccccCCCBbbbccccccc
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+ccccccccccccccccccccccccccccccccccccccccccccccccccc
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 Section 3 - Game Data for Team C.L.A.S.S.
 --------------------------------------------------------------------------------
--148 pt/round: C.L.A.S.S.(P3) "The name the team gives to this strategy"
--278 pt/round: Okonkwo(P0) "look at history and decide based on it"
-CCCBbbBcBbbbbbbBcBbBbbbbBCCBbbBcBbbBcBbbBcBbbBCCBbBbbbbbbbbbbbbbbbbbbbbBCCBBbbbB
-CCCcbbcBcbbbbbbcBcbcbbbbcCCcbbcBcbbcBcbbcBcbbcCCcbcbbbbbbbbbbbbbbbbbbbbcCCccbbbc
+97 pt/round: C.L.A.S.S.(P4) "The name the team gives to this strategy"
+-489 pt/round: Pollo tenders(P0) "The name the team gives to this strategy"
+CCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+CCCccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
-cBbBbBbBbBbbbbbBcBbbbbbBcBbbbbbBcBbBBcBbbBcBBCBBbBbBBcBbbbbbbbBCCBbbbBcBbbbbBcBb
-BcbcbcbcbcbbbbbcBcbbbbbcBcbbbbbcBcbccBcbbcBccCccbcbccBcbbbbbbbcCCcbbbcBcbbbbcBcb
-
-bbbbbbbBcB
-bbbbbbbcBc
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+ccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
 --------------------------------------------------------------------------------
--76 pt/round: C.L.A.S.S.(P3) "The name the team gives to this strategy"
--371 pt/round: Team 4(P1) "Team 4 Strategy"
+-111 pt/round: C.L.A.S.S.(P4) "The name the team gives to this strategy"
+-273 pt/round: Okonkwo(P1) "look at history and decide based on it"
+CCCBbBbbbbbbBCCBbbbbbbBCCBbBbbBcBbbBcBBcBbBBcBbBbBbbBCCBbbbbBCCBbbbbbbBCCBBBbbbb
+CCCcbcbbbbbbcCCcbbbbbbcCCcbcbbcBcbbcBccBcbccBcbcbcbbcCCcbbbbcCCcbbbbbbcCCcccbbbb
+
+bBcBbbbBCCBbbbBCCBbBbbbbBcBBcBb
+bcBcbbbcCCcbbbcCCcbcbbbbcBccBcb
+
+--------------------------------------------------------------------------------
+-77 pt/round: C.L.A.S.S.(P4) "The name the team gives to this strategy"
+-370 pt/round: Team 4(P2) "Team 4 Strategy"
 CcBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBb
 CBcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcb
 
-BbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBb
-cbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcb
-
-BbBbBbBbBbBbBbBbBbB
-cbcbcbcbcbcbcbcbcbc
+BbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbBbB
+cbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc
 
 --------------------------------------------------------------------------------
--246 pt/round: C.L.A.S.S.(P3) "The name the team gives to this strategy"
--246 pt/round:  Team 5 Mr.Turner(P2) "The name the team gives to this strategy"
+-247 pt/round: C.L.A.S.S.(P4) "The name the team gives to this strategy"
+-247 pt/round:  Team 5 Mr.Turner(P3) "The name the team gives to this strategy"
 cBcBbbbbbbbbbbbbbbbbbbbbBCcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 BcBcbbbbbbbbbbbbbbbbbbbbcCBbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 
 --------------------------------------------------------------------------------
--163 pt/round: C.L.A.S.S.(P3) "The name the team gives to this strategy"
--163 pt/round: Team7(P4) "The nice guys"
+-164 pt/round: C.L.A.S.S.(P4) "The name the team gives to this strategy"
+-161 pt/round: Team7(P5) "The nice guys"
 CcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbB
 CBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbc
 
 CcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbB
 CBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbc
 
-CcbBCcbBCcbB
-CBbcCBbcCBbc
+CcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcb
+CBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBb
 
 --------------------------------------------------------------------------------
--58 pt/round: C.L.A.S.S.(P3) "The name the team gives to this strategy"
--247 pt/round: We luv Mostafa(P5) "What are we doing"
+-56 pt/round: C.L.A.S.S.(P4) "The name the team gives to this strategy"
+-249 pt/round: We luv Mostafa(P6) "What are we doing"
 cbbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCB
 BbbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCc
 
-bbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBC
-bbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcC
+bbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbb
+bbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbb
+
+BCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbb
+cCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbb
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 Section 3 - Game Data for Team Team7
 --------------------------------------------------------------------------------
--115 pt/round: Team7(P4) "The nice guys"
--215 pt/round: Okonkwo(P0) "look at history and decide based on it"
-CBbcCBBbcCBbcCBbCBbcCBbCBbCBbcCBbcCBbcCBBbCBbCBBbcCBbcCBbcCBbcCBbCBBbcCBbcCBBbcC
-CcbBCccbBCcbBCcbCcbBCcbCcbCcbBCcbBCcbBCccbCcbCccbBCcbBCcbBCcbBCcbCccbBCcbBCccbBC
+99 pt/round: Team7(P5) "The nice guys"
+-497 pt/round: Pollo tenders(P0) "The name the team gives to this strategy"
+CBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+Cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
-BBBBBbcCBbcCBbcCBBbcCBBbcCBBbcCBbcCBbCBBbcCBbcCBBBBBbcCBbcCBBbcCBbcCBbcCBBBbcCBB
-cccccbBCcbBCcbBCccbBCccbBCccbBCcbBCcbCccbBCcbBCcccccbBCcbBCccbBCcbBCcbBCcccbBCcc
-
-bcCBbcC
-bBCcbBC
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
 --------------------------------------------------------------------------------
--125 pt/round: Team7(P4) "The nice guys"
--125 pt/round: Team 4(P1) "Team 4 Strategy"
+-92 pt/round: Team7(P5) "The nice guys"
+-234 pt/round: Okonkwo(P1) "look at history and decide based on it"
+CBbcCBbcCBbCBbcCBbCBbcCBbcCBbCBBBbCBBbcCBbcCBBbcCBBbcCBbcCBBbcCBbcCBbCBbCBBbcCBb
+CcbBCcbBCcbCcbBCcbCcbBCcbBCcbCcccbCccbBCcbBCccbBCccbBCcbBCccbBCcbBCcbCcbCccbBCcb
+
+cCBBbCBBbcCBBbCBbcCBBBBBbCBBbCBBbcCBbcCBbCBbcCBbCBbcCBbCBbcCBBbCBbCBBbCBbcCBBBbC
+BCccbCccbBCccbCcbBCcccccbCccbCccbBCcbBCcbCcbBCcbCcbBCcbCcbBCccbCcbCccbCcbBCcccbC
+
+BBbCBbcCB
+ccbCcbBCc
+
+--------------------------------------------------------------------------------
+-125 pt/round: Team7(P5) "The nice guys"
+-125 pt/round: Team 4(P2) "Team 4 Strategy"
 CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
 CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
 
-CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
-CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
+CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbC
+CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbC
 
 --------------------------------------------------------------------------------
--344 pt/round: Team7(P4) "The nice guys"
--25 pt/round:  Team 5 Mr.Turner(P2) "The name the team gives to this strategy"
+-370 pt/round: Team7(P5) "The nice guys"
+-4 pt/round:  Team 5 Mr.Turner(P3) "The name the team gives to this strategy"
 cCBbcCBbcCBbcCBbcCBbcCBbCbCbcCBBbcCBBbcCBBbcCBBbcCBBbccccccccccccccccccccccccccc
 BCcbBCcbBCcbBCcbBCcbBCcbCbCbBCccbBCccbBCccbBCccbBCccbBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
-cccccccccccccccccccccccccccccccccccccccccccc
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccCBbcc
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCcbBB
+
+cccccCBbccccccccCBbc
+BBBBBCcbBBBBBBBBCcbB
 
 --------------------------------------------------------------------------------
--163 pt/round: Team7(P4) "The nice guys"
--163 pt/round: C.L.A.S.S.(P3) "The name the team gives to this strategy"
+-161 pt/round: Team7(P5) "The nice guys"
+-164 pt/round: C.L.A.S.S.(P4) "The name the team gives to this strategy"
 CBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbc
 CcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbB
 
 CBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbc
 CcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbB
 
-CBbcCBbcCBbc
-CcbBCcbBCcbB
+CBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBbcCBb
+CcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcbBCcb
 
 --------------------------------------------------------------------------------
--500 pt/round: Team7(P4) "The nice guys"
-100 pt/round: We luv Mostafa(P5) "What are we doing"
+-500 pt/round: Team7(P5) "The nice guys"
+100 pt/round: We luv Mostafa(P6) "What are we doing"
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
-cccccccccccccccccccccccccccccccccccccc
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 Section 3 - Game Data for Team We luv Mostafa
 --------------------------------------------------------------------------------
--89 pt/round: We luv Mostafa(P5) "What are we doing"
--238 pt/round: Okonkwo(P0) "look at history and decide based on it"
-BBbBbcBCCBbbBCCBbbbcCCCBBBbbbCCCBbbBCCBbBbcBcCBCBbbBCCBBbBbCBcBBCBbbbcCCCBBBbbBc
-ccbcbBcCCcbbcCCcbbbBCCCcccbbbCCCcbbcCCcbcbBcBCcCcbbcCCccbcbCcBccCcbbbBCCCcccbbcB
+100 pt/round: We luv Mostafa(P6) "What are we doing"
+-500 pt/round: Pollo tenders(P0) "The name the team gives to this strategy"
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
-CBcBbcBCCBBbbBcCBcBbCBcBbcBcCBCBb
-CcBcbBcCCccbbcBCcBcbCcBcbBcBCcCcb
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+BBBBBBBBBBBBBBBBBB
+cccccccccccccccccc
 
 --------------------------------------------------------------------------------
--124 pt/round: We luv Mostafa(P5) "What are we doing"
--133 pt/round: Team 4(P1) "Team 4 Strategy"
+-98 pt/round: We luv Mostafa(P6) "What are we doing"
+-234 pt/round: Okonkwo(P1) "look at history and decide based on it"
+BbbBCCBbBBCBBBbbbcCCCBbBBcBbcBcCBcBbcBcCBcBBcBbcBCCBbbbcCCCBbBbCBCBbbbcCCCBBbBBc
+cbbcCCcbccCcccbbbBCCCcbccBcbBcBCcBcbBcBCcBccBcbBcCCcbbbBCCCcbcbCcCcbbbBCCCccbccB
+
+BbCBCBbbBCCBbbBcCBcBbcBcCBCBBbbbCCCBBbb
+cbCcCcbbcCCcbbcBCcBcbBcBCcCccbbbCCCccbb
+
+--------------------------------------------------------------------------------
+-123 pt/round: We luv Mostafa(P6) "What are we doing"
+-133 pt/round: Team 4(P2) "Team 4 Strategy"
 BbBbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
 cbcbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
 
-CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
-CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCbCb
+CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbC
+CbCbCbCbCbCbCbCbCbCbCbCbCbCbCbC
 
 --------------------------------------------------------------------------------
--364 pt/round: We luv Mostafa(P5) "What are we doing"
--3 pt/round:  Team 5 Mr.Turner(P2) "The name the team gives to this strategy"
+-337 pt/round: We luv Mostafa(P6) "What are we doing"
+-25 pt/round:  Team 5 Mr.Turner(P3) "The name the team gives to this strategy"
 bbbcCCCBbbbcCCCBbbbcCCCBBBBBbbbcCCCBBbbbcCCCBBbbbcCCCBbbbccccccccccccccccccccccc
 bbbBCCCcbbbBCCCcbbbBCCCcccccbbbBCCCccbbbBCCCccbbbBCCCcbbbBBBBBBBBBBBBBBBBBBBBBBB
 
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-
-ccccCCCBbbbccccccc
-BBBBCCCcbbbBBBBBBB
+ccccccccccccccccccccccccccccccccccccccccccccccccccc
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
 --------------------------------------------------------------------------------
--247 pt/round: We luv Mostafa(P5) "What are we doing"
--58 pt/round: C.L.A.S.S.(P3) "The name the team gives to this strategy"
+-249 pt/round: We luv Mostafa(P6) "What are we doing"
+-56 pt/round: C.L.A.S.S.(P4) "The name the team gives to this strategy"
 BbbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCc
 cbbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCB
 
-bbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcC
-bbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBC
+bbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbb
+bbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbb
+
+cCCcbbcCCcbbcCCcbbcCCcbbcCCcbbcCCcbb
+BCCBbbBCCBbbBCCBbbBCCBbbBCCBbbBCCBbb
 
 --------------------------------------------------------------------------------
-100 pt/round: We luv Mostafa(P5) "What are we doing"
--500 pt/round: Team7(P4) "The nice guys"
+100 pt/round: We luv Mostafa(P6) "What are we doing"
+-500 pt/round: Team7(P5) "The nice guys"
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-cccccccccccccccccccccccccccccccccccccc
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
 --------------------------------------------------------------------------------
