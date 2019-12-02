@@ -14,7 +14,6 @@ strategy_description = 'How does this strategy decide?'
 def move(my_history, their_history, my_score, their_score):
     # this is the first thing it will test, 
     # it will check if we wanted to do a certain series of moves and then it will execute them in order
- 
     
 
     # This first condition will go once there are more than 6 moves in the history so that it has enough moves to analize
@@ -53,52 +52,6 @@ def move(my_history, their_history, my_score, their_score):
         #otherwise, it will alternate
         else:
             if len(my_history) % 2 == 0:
-                return 'c'
-            else: 
-                return 'b'
-                
-    # Rasol's condition here:
-    elif len(their_history) >= 4:
-        # makes all the lists to append later
-        c_list = []
-        b_list = []
-        c_places = []
-        b_places = []
-        c_places_2 = []
-        b_places_2 = []
-        similar_pattern = []
-        similar_pattern = []
-        # checks if c or b is in the list then appending that with a number into another list to reference later.
-        for i in range(len(their_history)):
-            c_list += 'c'
-            b_list += 'b'
-            if their_history[i] == c_list[i]:
-                c_places += [i]
-            if their_history[i] == b_list[i]:
-                b_places += [i]
-        # takes both lists and attaches a number to sort later
-        for c in c_places:
-            c_places_2.append(str(c)+'c')
-        for b in b_places:
-            b_places_2. append(str(b)+'b')
-        # Appending the values then sorting them
-        similar_pattern += b_places_2
-        similar_pattern += c_places_2
-        similar_pattern.sort()
-        # making a new function to remove the numbers later
-        def remove(list): 
-            list = [''.join(x for x in i if x.isalpha()) for i in list]    
-            return list
-    
-        similar_pattern_new = remove(similar_pattern)
-        return similar_pattern_new[-1] 
-
-    # Last resort is to alternate
-    else:
-        if len(my_history) % 2 == 0:
-            return 'c'
-        else: 
-            return 'b'
 
         
     
