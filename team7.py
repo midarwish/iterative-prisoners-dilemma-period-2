@@ -6,9 +6,9 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
-team_name = 'The name the team gives to itself' # Only 10 chars displayed.
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+team_name = 'Team7' # Only 10 chars displayed.
+strategy_name = 'The nice guys'
+strategy_description = 'We will always collude'
     
 def move(my_history, their_history, my_score, their_score):
     ''' Arguments accepted: my_history, their_history are strings.
@@ -17,7 +17,25 @@ def move(my_history, their_history, my_score, their_score):
     Make my move.
     Returns 'c' or 'b'. 
     '''
-
+    
+    #scenario 1 -
+    if len(my_history)==0: # this scenario happens on the first turn
+        return 'c'
+    #scenario 2 -
+    elif len(their_history) >= 1 and their_history [-1] == 'c': #if their first move was collude, betray
+        return 'b'
+    #scenario 3 - 
+    elif len(their_history) >= 1 and their_history [-1] == 'b': #if their first move was betray, collude
+        return 'c'
+    #scenario 4 - 
+    elif my_score <= their_score:
+        return 'b'
+    else:
+        return 'c'
+    #if your score is less than their score betray
+    #else collude or betray
+        
+    
     # my_history: a string with one letter (c or b) per round that has been played with this opponent.
     # their_history: a string of the same length as history, possibly empty. 
     # The first round between these two players is my_history[0] and their_history[0].

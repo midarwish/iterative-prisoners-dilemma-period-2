@@ -6,11 +6,56 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
-team_name = 'The name the team gives to itself' # Only 10 chars displayed.
+team_name = 'Pollo tenders' # Only 10 chars displayed.
 strategy_name = 'The name the team gives to this strategy'
 strategy_description = 'How does this strategy decide?'
+
     
 def move(my_history, their_history, my_score, their_score):
+    # this is the first thing it will test, 
+    # it will check if we wanted to do a certain series of moves and then it will execute them in order
+    
+
+    # This first condition will go once there are more than 6 moves in the history so that it has enough moves to analize
+    if len(my_history) >=6 and their_history >= 6:
+            # This checks if their last 4 moves are cbcb we return the same
+        if their_history[-4] == 'c' and their_history[-3] == 'b' and their_history[-2] == 'c' and their_history[-1] == 'b':
+            return 'c'
+        # If they are doing bb in between each c we make sure to c on their c
+        elif their_history[-4] == 'c' and their_history[-3] == 'b' and their_history[-2] == 'b' and their_history[-1] == 'c':
+            return 'b'
+        # Same as first just opposite
+        elif their_history[-4] == 'b' and their_history[-3] == 'c' and their_history[-2] == 'b' and their_history[-1] == 'c':
+            return 'b'
+        # If they alternate every two rounds we do the same.
+        elif their_history[-6] == 'b' and their_history[-5] == 'b' and their_history[-4] == 'c' and their_history[-3] == 'c' and their_history[-2] == 'b' and their_history[-1] == 'b':
+            return 'c'
+        # If they follow this pattern we know to betray when they collude to get points.
+        elif their_history[-6] == 'b' and their_history[-5] == 'b' and their_history[-4] == 'c' and their_history[-3] == 'b' and their_history[-2] == 'b' and their_history[-1] == 'c':
+            return 'b'
+
+    # condition executes within the first three moves of the game
+    elif len(their_history) <= 3:
+        #it counts how many times they did each letter 
+        for letter in their_history:
+            b = 0
+            c = 0
+            if letter == 'c':
+                c += 1
+            elif letter == 'b':
+                b += 1
+            else:
+                print ('invalid input')
+            #then it checks if the majority is c and b if it is true
+            if c >= 2:
+                return 'b'
+        #otherwise, it will alternate
+        else:
+            if len(my_history) % 2 == 0:
+                return 'c'
+
+        
+    
     ''' Arguments accepted: my_history, their_history are strings.
     my_score, their_score are ints.
     
@@ -65,4 +110,6 @@ if __name__ == '__main__':
               # move('bbb', 'ccc', 0, 0) returns 'b'.
               my_score=0, 
               their_score=0,
-              result='b')             
+              result='b')
+              
+                           
